@@ -7,38 +7,37 @@ class CardGame {
   private app = new Application();
 
   private appContainer = document.getElementById("app");
-  
+
   private cardDeck = new CardDeck();
   private revealBtn = new Reveal();
 
   constructor() {
-    Assets.addBundle('cards', manifest)
+    Assets.addBundle("cards", manifest);
   }
 
   init() {
-
     Assets.init({
       preferences: {
-        preferCreateImageBitmap: false
-      }
-    })
+        preferCreateImageBitmap: false,
+      },
+    });
 
-    Assets.loadBundle(['cards']).then(async () => {
+    Assets.loadBundle(["cards"]).then(async () => {
       await this.app.init({
-        width: 500 ,
+        width: 500,
         height: 500,
-        backgroundColor: '#bbc4bd',
+        backgroundColor: "#bbc4bd",
         resolution: window.devicePixelRatio || 1,
         antialias: true,
-      })
+      });
       if (this.appContainer) {
         this.appContainer.appendChild(this.app.canvas);
       }
 
       this.cardDeck.init();
-      this.revealBtn.init();
-      this.app.stage.addChild(this.cardDeck.continer,this.revealBtn.container);
-    })
+      this.revealBtn.init(this.cardDeck.cardDeck);
+      this.app.stage.addChild(this.cardDeck.continer, this.revealBtn.container);
+    });
   }
 }
 
