@@ -32,6 +32,9 @@ class CardGame {
       if (this.appContainer) {
         this.appContainer.appendChild(this.app.canvas);
       }
+
+      this.cardDeck.init();
+      this.app.stage.addChild(this.cardDeck.continer);
     })
   }
 }
