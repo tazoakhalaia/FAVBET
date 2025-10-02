@@ -1,1 +1,1 @@
-export * from "./card-value-result.function";
+export * from "./card-result.function";
