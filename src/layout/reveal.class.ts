@@ -3,12 +3,15 @@ import { Colors, Cordinates, Cursos, EventMode } from "../shared/enums";
 
 export class Reveal {
   private readonly Y_X_GAP = 70;
+  private readonly CLEAR_TIME = 1000;
 
   private _container = new Container();
 
   private btn = new Graphics();
 
   private currentIndex?: number;
+
+  private openCardTimeOut?: ReturnType<typeof setTimeout>;
 
   get container(): Container {
     return this._container;
@@ -53,6 +56,14 @@ export class Reveal {
       });
       card.removeChildAt(0);
       card.addChild(values);
+      this.btn.eventMode = EventMode.NONE;
+      this.btn.cursor = Cursos.DEFAULT;
+      this.openCardTimeOut = setTimeout(() => {
+        card.removeChildren();
+        this.btn.eventMode = EventMode.DYNAMIC;
+        this.btn.cursor = Cursos.POINTER;
+        clearTimeout(this.openCardTimeOut);
+      }, this.CLEAR_TIME);
       this.currentIndex--;
     } else {
       this.btn.eventMode = EventMode.NONE;
