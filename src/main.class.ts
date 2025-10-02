@@ -1,6 +1,7 @@
 import { Application, Assets } from "pixi.js";
 import { CardDeck } from "./layout";
 import { manifest } from "./constants";
+import { Reveal } from "./layout/reveal.class";
 
 class CardGame {
   private app = new Application();
@@ -8,6 +9,7 @@ class CardGame {
   private appContainer = document.getElementById("app");
   
   private cardDeck = new CardDeck();
+  private revealBtn = new Reveal();
 
   constructor() {
     Assets.addBundle('cards', manifest)
@@ -34,7 +36,8 @@ class CardGame {
       }
 
       this.cardDeck.init();
-      this.app.stage.addChild(this.cardDeck.continer);
+      this.revealBtn.init();
+      this.app.stage.addChild(this.cardDeck.continer,this.revealBtn.container);
     })
   }
 }
