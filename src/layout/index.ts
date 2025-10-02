@@ -1,1 +1,1 @@
-export * from './card-deck'
+export * from './card-deck.class'
