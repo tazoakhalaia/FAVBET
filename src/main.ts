@@ -8,7 +8,7 @@ class CardGame {
   private appContainer = document.getElementById("app");
   
   private cardDeck = new CardDeck();
-  
+
   constructor() {
     Assets.addBundle('cards', manifest)
   }
@@ -25,7 +25,7 @@ class CardGame {
       await this.app.init({
         width: 500 ,
         height: 500,
-        backgroundColor: 0x1099bb,
+        backgroundColor: '#bbc4bd',
         resolution: window.devicePixelRatio || 1,
         antialias: true,
       })
