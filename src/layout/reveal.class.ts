@@ -1,11 +1,12 @@
 import { Container, Graphics, Text } from "pixi.js";
 import { Colors, Cordinates, Cursos, EventMode } from "../shared/enums";
 import { playSound } from "../shared/sounds";
-import { openCardBackSide, openCardResult } from "../shared/functions";
+import { skewAnimation } from "../shared/functions";
 
 export class Reveal {
   private readonly Y_X_GAP = 70;
   private readonly CLEAR_TIME = 2000;
+
   private _container = new Container();
 
   private btn = new Graphics();
@@ -54,19 +55,17 @@ export class Reveal {
   revealNext(cardDeck: Container[]) {
     if (this.currentIndex != undefined && this.currentIndex >= 0) {
       const card = cardDeck[this.currentIndex];
-      card.removeChildAt(0);
-      openCardBackSide(card);
-      openCardResult(card);
+      skewAnimation(card);
       playSound();
       this.btn.eventMode = EventMode.NONE;
       this.btn.cursor = Cursos.DEFAULT;
-      this.currentIndex--;
       this.openCardTimeOut = setTimeout(() => {
         card.removeChildren();
         this.btn.eventMode = EventMode.DYNAMIC;
         this.btn.cursor = Cursos.POINTER;
         clearTimeout(this.openCardTimeOut);
       }, this.CLEAR_TIME);
+      this.currentIndex--;
     } else {
       this.btn.eventMode = EventMode.NONE;
       this.btn.cursor = Cursos.DEFAULT;

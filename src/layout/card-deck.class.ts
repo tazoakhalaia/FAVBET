@@ -4,7 +4,8 @@ import { Cordinates } from "../shared/enums";
 export class CardDeck {
   private readonly CARD_WIDTH = 150;
   private readonly CARD_HEIGHT = 180;
-  private readonly CARD_GAP = 90;
+  private readonly CARD_GAP_X = 140;
+  private readonly CARD_GAP_Y = 10;
 
   private _container = new Container();
 
@@ -22,15 +23,16 @@ export class CardDeck {
     for (let i = 0; i < 5; i++) {
       const cardContainer = new Container();
       const card = new Sprite(Assets.get("card_back"));
+      card.anchor.set(0.5);
       card.setSize(this.CARD_WIDTH, this.CARD_HEIGHT);
       cardContainer.position.set(
         Cordinates.CANVAS_WIDTH / 2 -
           this.CARD_WIDTH / 2 +
-          this.CARD_GAP -
+          this.CARD_GAP_X -
           i * 20,
         Cordinates.CANVAS_HEIGHT / 2 -
           this.CARD_HEIGHT / 2 -
-          this.CARD_GAP +
+          this.CARD_GAP_Y +
           i * 30
       );
       cardContainer.addChild(card);

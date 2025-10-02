@@ -16,23 +16,21 @@ export function openCardResult(card: Container) {
     style: { fill: Colors.RED, fontSize: 24 },
   });
 
-  values.position.set(card.width / 2 - values.width / 2, 10);
-  suits.position.set(
-    card.width / 2 - suits.width / 2,
-    card.height / 2 - suits.height / 2
-  );
+  values.position.set(-8, -80);
 
   const symbol = new Sprite(Assets.get(suits.text));
   symbol.anchor.set(0.5);
   symbol.setSize(60, 65);
-  symbol.position.set(card.width / 2, card.height - 70);
-
+  values.zIndex = 1;
+  symbol.zIndex = 2;
   card.addChild(values, symbol);
 }
 
-export function openCardBackSide(card: Container) {
+export function openCardBackSide() {
   const bg = new Graphics()
     .roundRect(0, 0, CARD_WIDTH, CARD_HEIGHT, 10)
     .fill({ color: Colors.WHITE });
-  card.addChild(bg);
+  bg.pivot.set(CARD_WIDTH / 2, CARD_HEIGHT / 2);
+  bg.skew.set(0.1, 1.2);
+  return bg;
 }
