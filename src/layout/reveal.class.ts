@@ -1,5 +1,5 @@
 import { Container, Graphics, Text } from "pixi.js";
-import { Colors, Cordinates } from "../shared/enums";
+import { Colors, Cordinates, Cursos, EventMode } from "../shared/enums";
 
 export class Reveal {
   private readonly Y_X_GAP = 70;
@@ -22,6 +22,8 @@ export class Reveal {
 
   renderButton() {
     this.btn.roundRect(0, 0, 100, 50, 10).fill({ color: Colors.RED });
+    this.btn.eventMode = EventMode.DYNAMIC;
+    this.btn.cursor = Cursos.POINTER;
     const revealText = new Text({
       text: "Reveal",
       style: { fill: Colors.WHITE, fontSize: 16 },
