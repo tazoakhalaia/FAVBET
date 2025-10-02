@@ -1,5 +1,6 @@
 import { Container, Graphics, Text } from "pixi.js";
 import { Colors, Cordinates, Cursos, EventMode } from "../shared/enums";
+import { playSound } from "../shared/sounds";
 
 export class Reveal {
   private readonly Y_X_GAP = 70;
@@ -58,13 +59,14 @@ export class Reveal {
       card.addChild(values);
       this.btn.eventMode = EventMode.NONE;
       this.btn.cursor = Cursos.DEFAULT;
+      playSound();
+      this.currentIndex--;
       this.openCardTimeOut = setTimeout(() => {
         card.removeChildren();
         this.btn.eventMode = EventMode.DYNAMIC;
         this.btn.cursor = Cursos.POINTER;
         clearTimeout(this.openCardTimeOut);
       }, this.CLEAR_TIME);
-      this.currentIndex--;
     } else {
       this.btn.eventMode = EventMode.NONE;
       this.btn.cursor = Cursos.DEFAULT;

@@ -1,2 +1,2 @@
-export * from "./cards.constants";
-export * from "./manifests.constats";
+export * from "./cards.constant";
+export * from "./manifests.constat";
