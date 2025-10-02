@@ -12,6 +12,8 @@ export class Reveal {
 
   private currentIndex?: number;
 
+  private revealText = new Text();
+
   private openCardTimeOut?: ReturnType<typeof setTimeout>;
 
   get container(): Container {
@@ -32,15 +34,16 @@ export class Reveal {
     this.btn.roundRect(0, 0, 100, 50, 10).fill({ color: Colors.RED });
     this.btn.eventMode = EventMode.DYNAMIC;
     this.btn.cursor = Cursos.POINTER;
-    const revealText = new Text({
-      text: "Reveal",
-      style: { fill: Colors.WHITE, fontSize: 16 },
-    });
-    revealText.position.set(
-      this.btn.width / 2 - revealText.width / 2,
-      this.btn.height / 2 - revealText.height / 2
+    this.revealText.text = "REVEAL";
+    this.revealText.style = {
+      fill: Colors.WHITE,
+      fontSize: 16,
+    };
+    this.revealText.position.set(
+      this.btn.width / 2 - this.revealText.width / 2,
+      this.btn.height / 2 - this.revealText.height / 2
     );
-    this._container.addChild(this.btn, revealText);
+    this._container.addChild(this.btn, this.revealText);
   }
 
   addEvent(cardDeck: Container[]) {
@@ -49,7 +52,7 @@ export class Reveal {
   }
 
   revealNext(cardDeck: Container[]) {
-    if (this.currentIndex !== undefined && this.currentIndex >= 0) {
+    if (this.currentIndex != undefined && this.currentIndex >= 0) {
       const card = cardDeck[this.currentIndex];
       card.removeChildAt(0);
       openCardBackSide(card);
