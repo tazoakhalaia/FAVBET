@@ -4,6 +4,8 @@ import { manifest } from "./constants";
 import { Reveal } from "./layout/reveal.class";
 
 class CardGame {
+  private readonly RESTART_TIME = 2000;
+
   private app = new Application();
 
   private appContainer = document.getElementById("app");
@@ -45,14 +47,13 @@ class CardGame {
 
   gameRestart() {
     this.revealBtn.roundEnd = (data) => {
-      console.log(data);
       if (data.currentIndex === 1) {
         this.restartTimeout = setTimeout(() => {
           this.cardDeck.destroy();
           this.cardDeck.init();
           this.revealBtn.init(this.cardDeck.cardDeck);
           clearTimeout(this.restartTimeout);
-        }, 2000);
+        }, this.RESTART_TIME);
       }
     };
   }
