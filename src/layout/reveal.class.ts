@@ -7,6 +7,9 @@ export class Reveal {
   private readonly Y_X_GAP = 70;
   private readonly CLEAR_TIME = 2000;
 
+  private _roundEnd: (data: { currentIndex: number | undefined }) => void =
+    () => undefined;
+
   private _container = new Container();
 
   private btn = new Graphics();
@@ -21,24 +24,34 @@ export class Reveal {
     return this._container;
   }
 
+  get roundEnd() {
+    return this._roundEnd;
+  }
+
+  set roundEnd(fn: (data: { currentIndex: number | undefined }) => void) {
+    this._roundEnd = fn;
+  }
+
   init(cardDeck: Container[]) {
     this._container.position.set(
       Cordinates.CANVAS_WIDTH / 2 - this.Y_X_GAP,
       Cordinates.CANVAS_HEIGHT - this.Y_X_GAP
     );
-    this.currentIndex = cardDeck.length - 1;
+    this.currentIndex = cardDeck.length;
     this.renderButton();
     this.addEvent(cardDeck);
   }
 
   renderButton() {
-    this.btn.roundRect(0, 0, 100, 50, 10).fill({ color: Colors.RED });
+    this.btn.roundRect(0, 0, 100, 50, 10).fill({ color: Colors.GREEN });
     this.btn.eventMode = EventMode.DYNAMIC;
     this.btn.cursor = Cursos.POINTER;
     this.revealText.text = "REVEAL";
     this.revealText.style = {
       fill: Colors.WHITE,
       fontSize: 16,
+      fontWeight: "bold",
+      stroke: Colors.BLACK,
     };
     this.revealText.position.set(
       this.btn.width / 2 - this.revealText.width / 2,
@@ -54,7 +67,7 @@ export class Reveal {
 
   revealNext(cardDeck: Container[]) {
     if (this.currentIndex != undefined && this.currentIndex >= 0) {
-      const card = cardDeck[this.currentIndex];
+      const card = cardDeck[this.currentIndex - 1];
       skewAnimation(card);
       playSound();
       this.btn.eventMode = EventMode.NONE;
@@ -65,8 +78,12 @@ export class Reveal {
         this.btn.cursor = Cursos.POINTER;
         clearTimeout(this.openCardTimeOut);
       }, this.CLEAR_TIME);
+      this.roundEnd({
+        currentIndex: this.currentIndex,
+      });
       this.currentIndex--;
     } else {
+      this.currentIndex = cardDeck.length;
       this.btn.eventMode = EventMode.NONE;
       this.btn.cursor = Cursos.DEFAULT;
     }

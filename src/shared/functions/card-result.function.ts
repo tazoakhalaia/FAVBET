@@ -29,7 +29,7 @@ export function openCardResult(card: Container) {
 export function openCardBackSide() {
   const bg = new Graphics()
     .roundRect(0, 0, CARD_WIDTH, CARD_HEIGHT, 10)
-    .fill({ color: Colors.WHITE });
+    .fill({ color: "#e7ddeb" });
   bg.pivot.set(CARD_WIDTH / 2, CARD_HEIGHT / 2);
   bg.skew.set(0.1, 1.2);
   return bg;

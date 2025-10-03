@@ -11,6 +11,8 @@ class CardGame {
   private cardDeck = new CardDeck();
   private revealBtn = new Reveal();
 
+  private restartTimeout?: ReturnType<typeof setTimeout>;
+
   constructor() {
     Assets.addBundle("cards", manifest);
   }
@@ -26,7 +28,7 @@ class CardGame {
       await this.app.init({
         width: 500,
         height: 500,
-        backgroundColor: "#bbc4bd",
+        backgroundAlpha: 0,
         resolution: window.devicePixelRatio || 1,
         antialias: true,
       });
@@ -38,6 +40,21 @@ class CardGame {
       this.revealBtn.init(this.cardDeck.cardDeck);
       this.app.stage.addChild(this.cardDeck.continer, this.revealBtn.container);
     });
+    this.gameRestart();
+  }
+
+  gameRestart() {
+    this.revealBtn.roundEnd = (data) => {
+      console.log(data);
+      if (data.currentIndex === 1) {
+        this.restartTimeout = setTimeout(() => {
+          this.cardDeck.destroy();
+          this.cardDeck.init();
+          this.revealBtn.init(this.cardDeck.cardDeck);
+          clearTimeout(this.restartTimeout);
+        }, 2000);
+      }
+    };
   }
 }
 

@@ -40,4 +40,9 @@ export class CardDeck {
       this._container.addChild(cardContainer);
     }
   }
+
+  destroy() {
+    this._container.removeChildren();
+    this.cardDeck = [];
+  }
 }
